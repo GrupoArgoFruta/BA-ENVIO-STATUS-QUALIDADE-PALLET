@@ -13,7 +13,9 @@ public class ServiceHistoricoEnvio {
 	
 	public void atualizarEnvio(BigDecimal nUnico, String palett, BigDecimal codlocal, BigDecimal statusQualidade, String status, 
 			String obsqualidade, String calibre, BigDecimal qtdCaixaPallet, String pAGerados, 
-			Timestamp dthoraentrada, Timestamp dthorasaida, String nomeStatus) throws MGEModelException {
+			Timestamp dthoraentrada, Timestamp dthorasaida, String nomeStatus, String nomeLocal, Integer qtdpastilhas
+			, Integer qtdativadores, Integer qtdpallet, String obs, String descricao, String localTratado
+			) throws MGEModelException {
 		// TODO Auto-generated method stub
 		
 		JapeSession.SessionHandle hnd = null;
@@ -22,6 +24,11 @@ public class ServiceHistoricoEnvio {
 		try {
 			
 			hnd = JapeSession.open(); // Abertura da sessão do JapeSession
+			// CONVERSÕES NECESSÁRIAS
+	        BigDecimal qtdPastilhasBD = qtdpastilhas != null ?  new BigDecimal(qtdpastilhas) : BigDecimal.ZERO;
+	        BigDecimal qtdAtivadoresBD = qtdativadores != null ? new BigDecimal(qtdativadores) :BigDecimal.ZERO;
+	        BigDecimal qtdPalletBD = qtdpallet != null ? new BigDecimal(qtdpallet) : BigDecimal.ZERO;
+	        
 			DynamicVO statusVo = pedDAO.create()
 				.set("NROUNICO",nUnico)	
 				.set("NROPALLET",palett)
@@ -35,7 +42,13 @@ public class ServiceHistoricoEnvio {
 				.set("DTENTRADA",dthoraentrada)
 				.set("DTSAIDA",dthorasaida)
 				.set("DESCSTATUS",nomeStatus)
-				
+				.set("DESCLOCAL",nomeLocal)
+				.set("QTDPASTILHA",qtdPastilhasBD)
+				.set("QTDATIVADORES",qtdAtivadoresBD)
+				.set("QTDPALLET",qtdPalletBD)
+				.set("OBS",obs)
+				.set("DESCSERVICO",descricao)
+				.set("LOCATRATADO",localTratado)
 				.save();  	
 			
 		} catch (Exception e) {

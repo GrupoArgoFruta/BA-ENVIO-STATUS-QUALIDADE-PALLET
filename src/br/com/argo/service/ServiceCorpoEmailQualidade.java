@@ -18,11 +18,13 @@ import br.com.sankhya.jape.wrapper.JapeWrapper;
 import br.com.sankhya.modelcore.auth.AuthenticationInfo;
 import br.com.sankhya.modelcore.util.EntityFacadeFactory;
 import br.com.sankhya.ws.ServiceContext;
+import repository.ParametrosQualidadeDTO;
 
 public class ServiceCorpoEmailQualidade {
 	ServiceEmailStatuaQualidade email = new  ServiceEmailStatuaQualidade();
-	public void CorpoEmailStatusQualidade(ContextoAcao ctx, String tabelaHtml, Timestamp dthoraentrada, Timestamp dthorasaida) throws Exception {
+	public void CorpoEmailStatusQualidade(ContextoAcao ctx, String tabelaHtml, Timestamp dthoraentrada, Timestamp dthorasaida, Integer qtdpastilhas, Integer qtdativadores, Integer qtdpallet, String obs, String descricao, String localTratado) throws Exception {
 		JdbcWrapper jdbc = JapeFactory.getEntityFacade().getJdbcWrapper();
+		ParametrosQualidadeDTO dto = new ParametrosQualidadeDTO();
 		SessionHandle hnd = JapeSession.open();
 		NativeSql nativeSql = new NativeSql(jdbc);
 		EntityFacade dwfFacade = EntityFacadeFactory.getDWFFacade();
@@ -42,50 +44,7 @@ public class ServiceCorpoEmailQualidade {
         // Pega o valor do parâmetro digitado (como String)
        
         try {
-        	// meu parametros  Montagem de Pallet
-        	Integer qtdpastilhas    = (Integer) ctx.getParam("QTDPASTILHA");
-        	Integer qtdativadores   = (Integer) ctx.getParam("QTDATIVADORES");
-        	Integer qtdpallet       = (Integer) ctx.getParam("QTDPALLET");
-        	String obs = (String) ctx.getParam("OBS");
-        	String codstatus = (String) ctx.getParam("CODSTATUS");
-        	String localTratamento = (String) ctx.getParam("LOCATRATAMENTO");
-        	String descricao = "Serviço não informado"; // valor padrão
-        	String localTratado;
-        	switch (localTratamento) {
-        	    case "A":
-        	        localTratado = "ANTECAMARA";
-        	        break;
-        	    case "C":
-        	        localTratado = "CONTEINER FIXO";
-        	        break;
-        	    case "CM":
-        	        localTratado = "CAMARA 4";
-        	        break;
-        	    case "CA":
-        	        localTratado = "CONTEINER ARGOLOGISTICA";
-        	        break;
-        	    case "CF":
-        	        localTratado = "CARRETA FAMOSA";
-        	        break;
-        	    default:
-        	        localTratado = (localTratamento != null ? localTratamento.toUpperCase() : "DESCONHECIDO");
-        	}
-            // Só busca no banco se o parâmetro foi informado
-            if (codstatus != null && !codstatus.trim().isEmpty()) {
-                try {
-                    BigDecimal codigostatus = new BigDecimal(codstatus);
-                    JapeWrapper servicoDAO = JapeFactory.dao("AD_STATUSPLT");
-                    DynamicVO servicoVO = servicoDAO.findByPK(codigostatus);
 
-                    if (servicoVO != null) {
-                        descricao = servicoVO.asString("DESCRICAO");
-                    } else {
-                        descricao = "Serviço não encontrado";
-                    }
-                } catch (Exception e) {
-                    descricao = "Serviço inválido";
-                }
-            }
             String mensagem = "<!DOCTYPE html>" +
                     "<html>" +
                     "<head>" +
