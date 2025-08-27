@@ -6,5 +6,12 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="lib" path="C:/Users/natanael.lopes/SDK/Bibliotecas-Sankya-Padroes-LIB-main/repo-bibliotecasJava/jape.jar"/>
+	<classpathentry kind="lib" path="C:/Users/natanael.lopes/SDK/Bibliotecas-Sankya-Padroes-LIB-main/repo-bibliotecasJava/javax.ejb-api-3.2.jar"/>
+	<classpathentry kind="lib" path="C:/Users/natanael.lopes/SDK/Bibliotecas-Sankya-Padroes-LIB-main/repo-bibliotecasJava/javax.servlet.jar"/>
+	<classpathentry kind="lib" path="C:/Users/natanael.lopes/SDK/Bibliotecas-Sankya-Padroes-LIB-main/repo-bibliotecasJava/mge-modelcore.jar"/>
+	<classpathentry kind="lib" path="C:/Users/natanael.lopes/SDK/Bibliotecas-Sankya-Padroes-LIB-main/repo-bibliotecasJava/SankhyaW-extensions.jar"/>
+	<classpathentry kind="lib" path="C:/Users/natanael.lopes/SDK/Bibliotecas-Sankya-Padroes-LIB-main/repo-bibliotecasJava/sanutil.jar"/>
+	<classpathentry kind="lib" path="C:/Users/natanael.lopes/SDK/Bibliotecas-Sankya-Padroes-LIB-main/repo-bibliotecasJava/sanws.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
