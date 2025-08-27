@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.sql.Timestamp;
 
 import br.com.argo.service.ServiceCorpoEmailQualidade;
+import br.com.argo.service.ServiceHistoricoEnvio;
 import br.com.sankhya.extensions.actionbutton.AcaoRotinaJava;
 import br.com.sankhya.extensions.actionbutton.ContextoAcao;
 import br.com.sankhya.extensions.actionbutton.Registro;
@@ -23,7 +24,11 @@ public class ControllerPrincipalQualidade implements AcaoRotinaJava {
 	    JdbcWrapper jdbc = JapeFactory.getEntityFacade().getJdbcWrapper();
 	    SessionHandle hnd = JapeSession.open(); // Sempre feche depois
 	    ServiceCorpoEmailQualidade ServiceEmail = new ServiceCorpoEmailQualidade();
+	    ServiceHistoricoEnvio ServiceArmazenarEnvio  = new ServiceHistoricoEnvio ();
 	    try {
+	    	// Datas globais (do parâmetro)
+	        Timestamp dthoraentrada = (Timestamp) ctx.getParam("DTENTRADA");
+	        Timestamp dthorasaida = (Timestamp) ctx.getParam("DTSAIDA");
 	    	// Construir a tabela HTML com os dados das notas
 	        StringBuilder tabelaHtml = new StringBuilder();
 	        tabelaHtml.append("<table>")
@@ -89,13 +94,15 @@ public class ControllerPrincipalQualidade implements AcaoRotinaJava {
                 .append("<td>").append(QtdCaixaPallet).append("</td>")
                 .append("<td>").append(PAGerados).append("</td>")
                 .append("</tr>");
-	    		
+	    		ServiceArmazenarEnvio.atualizarEnvio( nUnico,palett,codlocal,StatusQualidade,
+	                    Status,obsqualidade,calibre,QtdCaixaPallet,PAGerados,dthoraentrada,dthorasaida,nomeStatus
+	                    
+	                );
 	    	}
 	    	 tabelaHtml.append("</table>");
-	    	 Timestamp dthoraentrada = (Timestamp) ctx.getParam("DTENTRADA");
-			 Timestamp dthorasaida= (Timestamp) ctx.getParam("DTSAIDA");
+	    	
 	    	 ServiceEmail.CorpoEmailStatusQualidade(ctx, tabelaHtml.toString(),dthoraentrada,dthorasaida);
-
+	    	 
 		} catch (Exception e) {
 			// TODO: handle exception
 			   ctx.mostraErro("Erro ao enviar o e-mail na classe principal: " + e.getMessage());

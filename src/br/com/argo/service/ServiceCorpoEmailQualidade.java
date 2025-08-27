@@ -42,7 +42,7 @@ public class ServiceCorpoEmailQualidade {
         // Pega o valor do parâmetro digitado (como String)
        
         try {
-        	// meu parametros 
+        	// meu parametros  Montagem de Pallet
         	Integer qtdpastilhas    = (Integer) ctx.getParam("QTDPASTILHA");
         	Integer qtdativadores   = (Integer) ctx.getParam("QTDATIVADORES");
         	Integer qtdpallet       = (Integer) ctx.getParam("QTDPALLET");
