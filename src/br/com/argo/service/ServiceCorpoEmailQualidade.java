@@ -42,12 +42,50 @@ public class ServiceCorpoEmailQualidade {
         // Pega o valor do parâmetro digitado (como String)
        
         try {
+        	// meu parametros 
         	Integer qtdpastilhas    = (Integer) ctx.getParam("QTDPASTILHA");
         	Integer qtdativadores   = (Integer) ctx.getParam("QTDATIVADORES");
         	Integer qtdpallet       = (Integer) ctx.getParam("QTDPALLET");
+        	String obs = (String) ctx.getParam("OBS");
+        	String codstatus = (String) ctx.getParam("CODSTATUS");
+        	String localTratamento = (String) ctx.getParam("LOCATRATAMENTO");
+        	String descricao = "Serviço não informado"; // valor padrão
+        	String localTratado;
+        	switch (localTratamento) {
+        	    case "A":
+        	        localTratado = "ANTECAMARA";
+        	        break;
+        	    case "C":
+        	        localTratado = "CONTEINER FIXO";
+        	        break;
+        	    case "CM":
+        	        localTratado = "CAMARA 4";
+        	        break;
+        	    case "CA":
+        	        localTratado = "CONTEINER ARGOLOGISTICA";
+        	        break;
+        	    case "CF":
+        	        localTratado = "CARRETA FAMOSA";
+        	        break;
+        	    default:
+        	        localTratado = (localTratamento != null ? localTratamento.toUpperCase() : "DESCONHECIDO");
+        	}
+            // Só busca no banco se o parâmetro foi informado
+            if (codstatus != null && !codstatus.trim().isEmpty()) {
+                try {
+                    BigDecimal codigostatus = new BigDecimal(codstatus);
+                    JapeWrapper servicoDAO = JapeFactory.dao("AD_STATUSPLT");
+                    DynamicVO servicoVO = servicoDAO.findByPK(codigostatus);
 
-        	
-           
+                    if (servicoVO != null) {
+                        descricao = servicoVO.asString("DESCRICAO");
+                    } else {
+                        descricao = "Serviço não encontrado";
+                    }
+                } catch (Exception e) {
+                    descricao = "Serviço inválido";
+                }
+            }
             String mensagem = "<!DOCTYPE html>" +
                     "<html>" +
                     "<head>" +
@@ -115,7 +153,9 @@ public class ServiceCorpoEmailQualidade {
 					"<p style='margin-top: 4px; font-weight: bold;'>Quantidade de Pastilhas: " + qtdpastilhas + "</p>" +
 					"<p style='margin-top: 4px; font-weight: bold;'>Quantidade de Ativadores: " + qtdativadores + "</p>" +
 					"<p style='margin-top: 4px; font-weight: bold;'>Quantidade de Paletes: " + qtdpallet + "</p>" +
-                    
+					"<p style='margin-top: 4px; font-weight: bold;'>Observação do Serviço:  " + (obs != null && !obs.trim().isEmpty() ? obs : "Nenhuma observação informada.")  + "</p>" +
+					"<p style='margin-top: 4px; font-weight: bold;'>Serviço: " + descricao + "</p>" +
+					"<p style='margin-top: 4px; font-weight: bold;'>Local de Tratamento: " + localTratado + "</p>" +
 
                     tabelaHtml +
 

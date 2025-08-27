@@ -36,6 +36,7 @@ public class ControllerPrincipalQualidade implements AcaoRotinaJava {
             .append("<th>Observação Qualidade Pallet </th>")
             .append("<th>Calibre </th>")
             .append("<th>Qtd. Caixas Pallet </th>")
+            .append("<th>P.A. Gerados </th>")
             .append("</tr>");
 	    	for (Registro registro : linhas) {
 	    		
@@ -47,7 +48,8 @@ public class ControllerPrincipalQualidade implements AcaoRotinaJava {
 	    		String obsqualidade = (String) registro.getCampo("OBSQUALIDADE");
 	    		String calibre = (String) registro.getCampo("CALIBRE");
 	    		BigDecimal QtdCaixaPallet = (BigDecimal) registro.getCampo("QTDCAIXASPLT");
-//	    		OBSQUALIDADE CALIBRE QTDCAIXASPLT
+	    		String PAGerados = (String) registro.getCampo("PAGERADOS");
+//	    		OBSQUALIDADE CALIBRE QTDCAIXASPLT  AD_STATUSPLT  CODSTATUS Status Pallet P=Pendente;F=Finalizado
 	    		String Status;
 
 	    		switch (statusSigla) {
@@ -85,6 +87,7 @@ public class ControllerPrincipalQualidade implements AcaoRotinaJava {
                 .append("<td>").append(obsqualidade).append("</td>")
                 .append("<td>").append(calibre).append("</td>")
                 .append("<td>").append(QtdCaixaPallet).append("</td>")
+                .append("<td>").append(PAGerados).append("</td>")
                 .append("</tr>");
 	    		
 	    	}
