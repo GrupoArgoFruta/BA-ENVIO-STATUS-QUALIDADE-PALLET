@@ -14,7 +14,8 @@ public class ServiceHistoricoEnvio {
 	public void atualizarEnvio(BigDecimal nUnico, String palett, BigDecimal codlocal, BigDecimal statusQualidade, String status, 
 			String obsqualidade, String calibre, BigDecimal qtdCaixaPallet, String pAGerados, 
 			Timestamp dthoraentrada, Timestamp dthorasaida, String nomeStatus, String nomeLocal, Integer qtdpastilhas
-			, Integer qtdativadores, Integer qtdpallet, String obs, String descricao, String localTratado
+			,Integer qtdativadores, Integer qtdpallet, String obs, String descricao, String localTratado,
+			String usuarioLogadoNome, BigDecimal usuarioLogadoID, Timestamp dataAtual
 			) throws MGEModelException {
 		// TODO Auto-generated method stub
 		
@@ -49,6 +50,9 @@ public class ServiceHistoricoEnvio {
 				.set("OBS",obs)
 				.set("DESCSERVICO",descricao)
 				.set("LOCATRATADO",localTratado)
+				.set("NOMEUSU",usuarioLogadoNome)
+				.set("CODUSU",usuarioLogadoID)
+				.set("DATATUAL",dataAtual)
 				.save();  	
 			
 		} catch (Exception e) {
