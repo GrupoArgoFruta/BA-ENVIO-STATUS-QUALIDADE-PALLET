@@ -1,0 +1,1 @@
+#Status qualidade pallet
