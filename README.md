@@ -71,6 +71,8 @@ Este código implementa a lógica de ação personalizada no Sankhya para atuali
 
 - Em caso de falha, exibe mensagem no contexto da ação (ctx.mostraErro).
 
+- email padrão : expedicao.qualidade@argofruta.com
+
 ## 📊 Fluxo Resumido
 
 - Usuário executa a ação no Sankhya.
